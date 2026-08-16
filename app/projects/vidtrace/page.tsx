@@ -1,0 +1,164 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
+import { Container } from "@/components/layout/Container";
+import { Button } from "@/components/ui/Button";
+import { MonoTag } from "@/components/ui/Tags";
+import { projects } from "@/content/projects";
+
+const project = projects.find((p) => p.slug === "vidtrace")!;
+
+export const metadata: Metadata = {
+  title: `${project.title} — Jayesh Desai`,
+  description: project.tagline,
+  alternates: { canonical: "/projects/vidtrace" },
+  openGraph: {
+    title: project.title,
+    description: project.tagline,
+    type: "article",
+  },
+};
+
+export default function VidTracePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.tagline,
+    dateCreated: project.date,
+    creator: { "@type": "Person", name: "Jayesh Desai" },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Nav />
+      <main id="main" className="pt-32 pb-24 bg-cream">
+        <Container>
+          <Link
+            href="/#work"
+            className="font-mono text-sm text-slate hover:text-violet inline-flex items-center gap-1 mb-8"
+          >
+            <ArrowLeft size={14} strokeWidth={2.4} aria-hidden="true" />
+            Back to home
+          </Link>
+
+          <p className="font-mono text-xs uppercase tracking-[0.12em] text-slate mb-4">
+            Flagship project · {project.date}
+          </p>
+          <h1 className="font-display font-extrabold text-[32px] md:text-[48px] leading-[1.08] tracking-[-0.02em] mb-4 max-w-3xl">
+            {project.title}
+          </h1>
+          <p className="font-accent text-violet text-xl md:text-2xl mb-8 max-w-2xl">
+            {project.tagline}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-10">
+            {project.stack.map((t) => (
+              <span
+                key={t}
+                className="font-mono text-xs px-3 py-1.5 rounded-full border border-hairline text-slate"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-4 mb-14">
+            {project.links.github && (
+              <Button href={project.links.github} variant="primary" external>
+                View on GitHub
+                <ArrowUpRight size={16} strokeWidth={2.4} aria-hidden="true" />
+              </Button>
+            )}
+            <Button href="/#contact" variant="secondary">
+              Get in touch
+            </Button>
+          </div>
+
+          <div className="bg-white rounded-[24px] p-8 md:p-12 mb-12 border border-hairline shadow-[0_20px_50px_-35px_rgba(15,15,22,0.35)]">
+            <h2 className="font-display font-bold text-2xl mb-4">
+              The problem
+            </h2>
+            <p className="text-slate leading-[1.7] max-w-[70ch] mb-2">
+              {project.problem}
+            </p>
+          </div>
+
+          <div className="bg-white rounded-[24px] p-8 md:p-12 mb-12 border border-hairline shadow-[0_20px_50px_-35px_rgba(15,15,22,0.35)]">
+            <h2 className="font-display font-bold text-2xl mb-8">
+              How it works
+            </h2>
+            <div className="space-y-6">
+              {project.pipeline?.map((p) => (
+                <div key={p.step} className="flex gap-5 items-start">
+                  <span className="h-11 w-11 shrink-0 rounded-full bg-violet-tint text-violet-deep flex items-center justify-center font-mono text-sm">
+                    {p.step}
+                  </span>
+                  <div>
+                    <p className="font-display font-bold text-base mb-1">
+                      {p.tool}
+                    </p>
+                    <p className="text-slate text-[15px] leading-relaxed">
+                      {p.detail}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-[24px] p-8 md:p-12 mb-12 border border-hairline shadow-[0_20px_50px_-35px_rgba(15,15,22,0.35)]">
+            <h2 className="font-display font-bold text-2xl mb-6">
+              What it does
+            </h2>
+            <ul className="space-y-4">
+              {project.highlights.map((h) => (
+                <li key={h} className="flex gap-3 text-slate leading-relaxed">
+                  <span className="text-violet mt-1.5 shrink-0" aria-hidden="true">
+                    ·
+                  </span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+
+            {project.detailChips && (
+              <div className="flex flex-wrap gap-2 mt-8">
+                {project.detailChips.map((chip) => (
+                  <MonoTag key={chip}>{chip}</MonoTag>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {project.team && (
+            <div className="bg-white rounded-[24px] p-8 md:p-12 mb-12 border border-hairline shadow-[0_20px_50px_-35px_rgba(15,15,22,0.35)]">
+              <h2 className="font-display font-bold text-2xl mb-4">
+                Team &amp; guidance
+              </h2>
+              <p className="text-slate leading-relaxed max-w-[65ch] mb-2">
+                Built as a three-person final-year capstone project at{" "}
+                {project.team.institution}: {project.team.names.join(", ")}.
+              </p>
+              <p className="text-slate leading-relaxed max-w-[65ch]">
+                Guided by {project.team.guide}.
+              </p>
+            </div>
+          )}
+
+          <p className="text-slate text-[15px] max-w-2xl">
+            Screenshots and a short walkthrough recording are on the way.
+            Reach out if you&apos;d like the full project report or a walkthrough.
+          </p>
+        </Container>
+      </main>
+      <Footer />
+    </>
+  );
+}

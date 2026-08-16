@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #fdf7e4;
+  --cream-deep: #fbf1d4;
+  --white: #ffffff;
+  --butter: #ffd84a;
+  --violet: #5b3df0;
+  --violet-deep: #4527d6;
+  --violet-tint: #ece5ff;
+  --ink: #0f0f16;
+  --slate: #40405a;
+  --hairline: #ddd0a3;
+  --success: #16a34a;
+  --error: #c2410c;
+
+  --font-display: var(--font-inter);
+  --font-accent: var(--font-inter);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jbmono);
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-cream-deep: var(--cream-deep);
+  --color-white: var(--white);
+  --color-butter: var(--butter);
+  --color-violet: var(--violet);
+  --color-violet-deep: var(--violet-deep);
+  --color-violet-tint: var(--violet-tint);
+  --color-ink: var(--ink);
+  --color-slate: var(--slate);
+  --color-hairline: var(--hairline);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --font-display: var(--font-display);
+  --font-accent: var(--font-accent);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+::selection {
+  background: var(--violet);
+  color: var(--white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+.font-accent {
+  font-family: var(--font-accent), serif;
+  font-style: italic;
+}
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--white);
+  padding: 12px 20px;
+  border-radius: 0 0 8px 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@keyframes blob-morph {
+  0% {
+    border-radius: 46% 54% 55% 45% / 48% 45% 55% 52%;
+  }
+  50% {
+    border-radius: 54% 46% 45% 55% / 52% 55% 45% 48%;
+  }
+  100% {
+    border-radius: 46% 54% 55% 45% / 48% 45% 55% 52%;
+  }
+}
+.blob-shape {
+  animation: blob-morph 14s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .blob-shape {
+    animation: none;
+  }
+}
+
+@keyframes dash-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
