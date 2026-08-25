@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X, Download } from "lucide-react";
@@ -9,6 +10,7 @@ const links = [
   { href: "/#work", label: "Work" },
   { href: "/#about", label: "About" },
   { href: "/#skills", label: "Skills" },
+  { href: "/#projects", label: "Projects" },
   { href: "/#path", label: "Path" },
   { href: "/#contact", label: "Contact" },
 ];
@@ -21,6 +23,16 @@ export function Nav() {
   const lastScroll = useRef(0);
   const menuRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
+
+    const handleLogoClick = (e: React.MouseEvent) => {
+      if (pathname === "/") {
+        e.preventDefault();
+        setMenuOpen(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    };
+  
 
   useEffect(() => {
     const onScroll = () => {
@@ -102,7 +114,7 @@ export function Nav() {
         aria-label="Primary"
         className="mx-auto max-w-[1200px] h-[72px] px-5 md:px-10 lg:px-20 flex items-center justify-between"
       >
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+        <Link href="/#top" onClick={handleLogoClick} className="flex items-center gap-2.5 shrink-0">
           <span className="h-7 w-7 rounded-full bg-violet flex items-center justify-center text-white font-mono text-xs font-medium">
             JD
           </span>
@@ -159,7 +171,7 @@ export function Nav() {
         <div
           id="mobile-menu"
           ref={menuRef}
-          className="lg:hidden fixed inset-0 top-[72px] bg-cream z-40 flex flex-col justify-between p-8"
+          className="lg:hidden fixed left-0 right-0 top-[72px] h-[calc(100dvh-72px)] overflow-y-auto bg-cream z-40 flex flex-col justify-between p-8"
         >
           <ul className="flex flex-col gap-2 mt-4">
             {links.map((l, i) => (

@@ -8,11 +8,11 @@ import { profile } from "@/content/profile";
 
 export function Projects() {
   return (
-    <Section bg="white" ariaLabel="More projects">
+    <Section id="projects" bg="white" ariaLabel="More projects">
       <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
         <div>
           <Eyebrow>Projects</Eyebrow>
-          <h2 className="font-display font-extrabold text-[26px] md:text-[32px] leading-[1.15] tracking-[-0.02em]">
+          <h2 id="projects-heading" className="font-display font-extrabold text-[26px] md:text-[32px] leading-[1.15] tracking-[-0.02em]">
             More things{" "}
             <span className="font-accent text-violet">I&apos;ve built</span>
           </h2>
